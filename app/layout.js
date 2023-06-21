@@ -11,7 +11,11 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" type="image/png" href="../public/twithub-logo.png"></link>
       </head>
-      <body>{children}</body>
+      <body className='grid place-content-center min-h-screen bg-blue-100' >
+        <div className='bg-white text-6xl w-[100vw] sm:w-[520px] h-[100vh] sm:h-[90vh] sm:rounded-[5px]' >
+          {children}
+        </div>
+      </body>
     </html>
   )
 }
