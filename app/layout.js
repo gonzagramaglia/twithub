@@ -3,9 +3,7 @@ import 'tailwindcss/tailwind.css';
 export const metadata = {
   title: 'TwitHub',
   description: 'Social network for developers',
-  icons: {
-    icon: '/twithub-logo.ico'
-  }
+  icons: { icon: '/twithub-logo.ico' }
 }
  
 export default function RootLayout({ children }) {
