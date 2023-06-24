@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Button from "@/components/Button";
-import { GitHub, Ethereum } from "@/components/Icons";
+import { GitHub } from "@/components/Icons";
 
 import { loginWithGitHub, onAuthStateChange, logOut } from "@/firebase/client";
 
@@ -38,10 +38,6 @@ const Home = () => {
                         <Button onClick={handleClick} width={'w-48'}>
                             <GitHub height={20} width={20} fill={'#000'} />
                             Login with GitHub
-                        </Button>
-                        <Button width={'w-48'}>
-                            <Ethereum height={20} width={20} fill={'#fff'} />
-                            Login with Ethereum
                         </Button>
                     </div>
                 </>
