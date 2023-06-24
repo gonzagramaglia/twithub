@@ -35,7 +35,7 @@ const Home = () => {
                     <h1 className="text-2xl font-bold mb-2" >TwitHub</h1>
                     <h3 className="text-gray-300 text-lg mb-4" >Social network for developers</h3>
                     <div className="text-sm flex flex-col gap-2" >
-                        <Button onClick={handleClick} width={'w-48'}>
+                        <Button onClick={handleClick} >
                             <GitHub height={20} width={20} fill={'#000'} />
                             Login with GitHub
                         </Button>
