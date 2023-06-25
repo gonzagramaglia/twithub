@@ -1,11 +1,11 @@
 import Image from "next/image"
 
-const Avatar = ({ alt, src, styles }) => {
+const Avatar = ({ alt, src, width, height, styles }) => {
   return (
     <Image
       src={src}
-      width={500}
-      height={500}
+      width={width || 500}
+      height={height || 500}
       alt={alt}
       className={styles}
     />
