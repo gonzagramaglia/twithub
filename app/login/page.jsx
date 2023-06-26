@@ -1,11 +1,9 @@
 'use client'
 
-import { loginWithGitHub } from "@/firebase/client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Button from "@/components/Button";
-import { GitHub } from "@/components/Icons";
 import useUser, {USER_STATE} from "../hooks/useUser";
+import GitHubLogin from "@/components/GitHubLogin";
 import Loading from "@/components/Loading";
 
 const Login = () => {
@@ -14,14 +12,9 @@ const Login = () => {
     const router = useRouter();
 
     useEffect( () => {
-        user && router.replace('/home')
+        user && router.replace('/')
     }, [user])
     
-    const handleClick = () => {
-        loginWithGitHub().then(setUser).catch(err => {
-          console.log(err)
-        })
-      }
 
     return (
         <section className="flex flex-col items-center text-center my-[50%]" >
@@ -32,19 +25,14 @@ const Login = () => {
             {
                 user === USER_STATE.NOT_LOGGED   
                 &&
-                <>
-                    <div className="text-sm flex flex-col gap-2" >
-                        <Button onClick={handleClick} >
-                            <GitHub height={20} width={20} fill={'#000'} />
-                            Login with GitHub
-                        </Button>
-                    </div>
-                </>
+                <GitHubLogin />
             }
             {
                 user === USER_STATE.NOT_KNOWN 
                 &&
-                <Loading />
+                <>
+                    <GitHubLogin />
+                </>
             }
         </section>
     )
