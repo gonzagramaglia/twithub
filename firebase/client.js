@@ -17,11 +17,13 @@ const mapUserFromFirebaseAuthToUser = (user) => {
     // const credential = GithubAuthProvider.credentialFromResult(result);
     // const token = credential.accessToken;
 
-    const { displayName, photoURL } = user
+    const { displayName, photoURL, email, uid } = user
 
     return {
         name: displayName,
-        photo: photoURL
+        photo: photoURL,
+        email,
+        uid,
     }
 }
 
@@ -56,4 +58,10 @@ export const loginWithGitHub = () => {
             mapUserFromFirebaseAuthToUser(user)
             }
         );
-  };
+};
+
+
+export const addTweet = ({ photo, content, userId, username }) => {
+
+}
+
