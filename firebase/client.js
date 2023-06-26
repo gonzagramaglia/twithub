@@ -1,4 +1,5 @@
 import { initializeApp } from "@firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, GithubAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 
@@ -11,7 +12,9 @@ const firebaseConfig = {
     appId: "1:502648838854:web:7dd10489459e66274ed5c7"
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
 
 const mapUserFromFirebaseAuthToUser = (user) => {
     // const credential = GithubAuthProvider.credentialFromResult(result);
@@ -61,7 +64,20 @@ export const loginWithGitHub = () => {
 };
 
 
-export const addTweet = ({ photo, content, userId, username }) => {
-
+export const addTweet = async ({ photo, content, userId, userName }) => {
+    try {
+        const docRef = await addDoc(collection(db, "tweets"), {
+            photo,
+            content,
+            userId,
+            userName,
+            createdAt: new Date(),
+            likesCount: 0,
+            sharesCount: 0
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
 }
 

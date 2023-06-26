@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import useUser from "../hooks/useUser";
 import { useState } from "react";
 
-import { addTweet } from '../../firebase/client';
+import { addTweet } from "@/firebase/client";
 
 const Twittear = () => {
 
