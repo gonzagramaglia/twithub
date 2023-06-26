@@ -11,7 +11,12 @@ import { useRouter } from "next/navigation";
 
 const App = () => {
 
-    const [user, setUser] = useState(undefined);
+    const USER_STATE = {
+        NOT_LOGGED: null,
+        NOT_KNOWN: undefined
+    }
+
+    const [user, setUser] = useState(USER_STATE.NOT_LOGGED);
     const router = useRouter();
 
     useEffect( () => {
@@ -34,7 +39,7 @@ const App = () => {
             <h1 className="text-2xl font-bold mb-2" >TwitHub</h1>
             
             {
-                user === null   
+                user === USER_STATE.NOT_LOGGED   
                 &&
                 <>
                     <h3 className="text-gray-300 text-lg mb-4" >Social network for developers</h3>
@@ -47,7 +52,7 @@ const App = () => {
                 </>
             }
             {
-                user === undefined   
+                user === USER_STATE.NOT_KNOWN   
                 &&
                 <div role="status">
                     <svg aria-hidden="true" class="w-8 h-8 mt-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-50" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
