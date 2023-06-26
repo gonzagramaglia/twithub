@@ -22,6 +22,7 @@ const App = () => {
         <section className="flex flex-col items-center text-center my-[50%]" >
             <img src="twithub-logo.png" alt="TwitHub Logo" className="w-16 mb-4" /> 
             <h1 className="text-2xl font-bold mb-2" >TwitHub</h1>
+            <h3 className="text-gray-300 text-lg mb-4" >Social network for developers</h3>
             {
                 user === USER_STATE.NOT_KNOWN 
                 &&

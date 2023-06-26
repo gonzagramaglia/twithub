@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useUser, {USER_STATE} from "../hooks/useUser";
 import GitHubLogin from "@/components/GitHubLogin";
-import Loading from "@/components/Loading";
 
 const Login = () => {
 

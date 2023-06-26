@@ -2,18 +2,18 @@
 
 import Tweet from "@/components/Tweet";
 import { useState, useEffect } from "react";
+import useUser from "../hooks/useUser";
 
 const Home = () => {
 
     const [timeline, setTimeline] = useState([])
+    user = useUser();
 
     useEffect( () => {
-        fetch('/api/timeline')
+        user && fetch('/api/timeline')
             .then( res => res.json() )
             .then( setTimeline  )
-
-        console.log(timeline)
-    }, [])
+    }, [user])
 
     return (
         <>
