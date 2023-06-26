@@ -11,7 +11,7 @@ export const USER_STATE = {
 } 
 
 export default function useUser() {
-    const [user, setUser] = useState(USER_STATE.NOT_LOGGED);
+    const [user, setUser] = useState(USER_STATE.NOT_KNOWN);
     const router = useRouter();
 
     useEffect( () => {
@@ -19,7 +19,7 @@ export default function useUser() {
     }, [] )
 
     useEffect( () => {
-        user === USER_STATE.NOT_LOGGED && router.push('/')
+        user === USER_STATE.NOT_LOGGED && router.push('/login')
     }, [user])
     
     return user

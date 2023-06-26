@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import { GitHub } from "@/components/Icons";
 import useUser, {USER_STATE} from "../hooks/useUser";
+import Loading from "@/components/Loading";
 
 const Login = () => {
 
@@ -39,6 +40,11 @@ const Login = () => {
                         </Button>
                     </div>
                 </>
+            }
+            {
+                user === USER_STATE.NOT_KNOWN 
+                &&
+                <Loading />
             }
         </section>
     )
