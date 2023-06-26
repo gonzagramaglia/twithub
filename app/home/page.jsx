@@ -34,7 +34,7 @@ const Home = () => {
                         ))
                     }
                 </section>
-                <nav className="mt-auto border-b border-gray-500 h-[49px] w-[100%]" >
+                <nav className="mt-auto border-b border-gray-500 h-[49px] bg-[#0f1017] w-[100%] sticky bottom-0" >
 
                 </nav>
             </div>
