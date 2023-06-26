@@ -1,5 +1,5 @@
 import { initializeApp } from "@firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, GithubAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 
@@ -80,4 +80,18 @@ export const addTweet = async ({ photo, content, userId, userName }) => {
         console.error("Error adding document: ", e);
       }
 }
+
+export const fetchLatestTweets = async () => {
+    const { docs } = await getDocs(collection(db, "tweets"));
+    return docs.map((doc) => {
+        const data = doc.data();
+        const id = doc.id;
+        const { createdAt } = data;
+
+        return {
+            ...data,
+            id,
+            createdAt: +createdAt.toDate()
+        }
+})}
 

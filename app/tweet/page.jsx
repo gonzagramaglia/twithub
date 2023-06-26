@@ -3,13 +3,23 @@
 import Button from "@/components/Button";
 import useUser from "../hooks/useUser";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { addTweet } from "@/firebase/client";
+
+const TWITTEAR_STATUSES = {
+  USER_NOT_KNOW: 0,
+  LOADING: 1,
+  SUCCESS: 2,
+  ERROR: -1
+}
 
 const Twittear = () => {
 
   const user = useUser();
+  const router = useRouter();
   const [content, setContent] = useState('')
+  const [status, setStatus] = useState(TWITTEAR_STATUSES.USER_NOT_KNOW)
 
   const handleChange = (e) => {
     const { value } = event.target
@@ -18,13 +28,24 @@ const Twittear = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setStatus(TWITTEAR_STATUSES.LOADING)
     addTweet({
       photo: user.photo,
       content,
       userId: user.uid,
       userName: user.name 
     })
+      .then( () => {
+        router.push('/')
+      }
+    )
+      .catch( (err) => {
+        console.error(err)
+        setStatus(TWITTEAR_STATUSES.ERROR)
+    })
   }
+
+  const isButtonDisabled = !content.length || status === TWITTEAR_STATUSES.LOADING
 
   return (
     <div className="flex flex-col items-center">
@@ -40,7 +61,7 @@ const Twittear = () => {
         />
         <div>
             <Button
-              disabled={content.length === 0}
+              disabled={isButtonDisabled}
             >
               Twittear
             </Button>

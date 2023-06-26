@@ -3,6 +3,7 @@
 import Tweet from "@/components/Tweet";
 import { useState, useEffect } from "react";
 import useUser from "../hooks/useUser";
+import { fetchLatestTweets } from "@/firebase/client";
 
 const Home = () => {
 
@@ -13,6 +14,7 @@ const Home = () => {
         user && fetch('/api/timeline')
             .then( res => res.json() )
             .then( setTimeline  )
+        // user && fetchLatestTweets().then(setTimeline)
     }, [user])
 
     return (
@@ -26,10 +28,13 @@ const Home = () => {
                         timeline.map(tweet => (
                             <Tweet 
                                 key={tweet.id}
+                                id={tweet.id}
+                                createdAt={tweet.createdAt}
                                 photo={tweet.photo} 
                                 name={tweet.name}
-                                username={tweet.username}
-                                message={tweet.message}
+                                userName={tweet.userName}
+                                content={tweet.content}
+                                userId={tweet.userId}
                             />
                         ))
                     }
