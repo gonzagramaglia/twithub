@@ -12,7 +12,8 @@ const App = () => {
 
     useEffect( () => {
         user && router.replace('/home')
-        USER_STATE.NOT_LOGGED && router.replace('/login')
+        USER_STATE.NOT_LOGGED && router.replace('/login');
+        USER_STATE.NOT_KNOWN && router.replace('/login');
     }, [user])
     
 
