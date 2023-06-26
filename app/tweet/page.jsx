@@ -1,6 +1,10 @@
 import Button from "@/components/Button"
+import useUser from "../hooks/useUser"
 
 const Twittear = () => {
+
+  const user = useUser()
+
   return (
     <div className="flex flex-col items-center">
       <form className="w-full p-4">

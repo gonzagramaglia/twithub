@@ -1,58 +1,28 @@
 'use client'
 
-import { useState, useEffect } from "react";
-import Button from "@/components/Button";
-import { GitHub } from "@/components/Icons";
-import Image from "next/image";
-
-import { loginWithGitHub, onAuthStateChange, logOut } from "@/firebase/client";
+import { useEffect } from "react";
 
 import { useRouter } from "next/navigation";
+import useUser, { USER_STATE } from "./hooks/useUser";
 
 const App = () => {
 
-    const USER_STATE = {
-        NOT_LOGGED: null,
-        NOT_KNOWN: undefined
-    }
-
-    const [user, setUser] = useState(USER_STATE.NOT_LOGGED);
+    const user = useUser()
     const router = useRouter();
 
     useEffect( () => {
-        onAuthStateChange(setUser)
-    }, [] )
-
-    useEffect( () => {
         user && router.replace('/home')
+        USER_STATE.NOT_KNOWN || USER_STATE.NOT_LOGGED && router.replace('/login')
     }, [user])
     
-    const handleClick = () => {
-        loginWithGitHub().then(setUser).catch(err => {
-          console.log(err)
-        })
-      }
 
     return (
         <section className="flex flex-col items-center text-center my-[50%]" >
             <img src="twithub-logo.png" alt="TwitHub Logo" className="w-16 mb-4" /> 
             <h1 className="text-2xl font-bold mb-2" >TwitHub</h1>
-            
+            <h3 className="text-gray-300 text-lg mb-4" >Social network for developers</h3>
             {
-                user === USER_STATE.NOT_LOGGED   
-                &&
-                <>
-                    <h3 className="text-gray-300 text-lg mb-4" >Social network for developers</h3>
-                    <div className="text-sm flex flex-col gap-2" >
-                        <Button onClick={handleClick} >
-                            <GitHub height={20} width={20} fill={'#000'} />
-                            Login with GitHub
-                        </Button>
-                    </div>
-                </>
-            }
-            {
-                user === USER_STATE.NOT_KNOWN   
+                user === (USER_STATE.NOT_KNOWN || USER_STATE.NOT_LOGGED)
                 &&
                 <div role="status">
                     <svg aria-hidden="true" class="w-8 h-8 mt-2 text-gray-200 animate-spin dark:text-gray-600 fill-gray-50" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
