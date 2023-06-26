@@ -7,7 +7,7 @@ import useUser from "../hooks/useUser";
 const Home = () => {
 
     const [timeline, setTimeline] = useState([])
-    user = useUser();
+    const user = useUser();
 
     useEffect( () => {
         user && fetch('/api/timeline')
