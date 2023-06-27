@@ -1,7 +1,8 @@
 import { initializeApp } from "@firebase/app";
 import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, GithubAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { v4 } from 'uuid';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBm-MTReOavOD_0mSN4CgWJavAWP5yt3Os",
@@ -13,6 +14,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 
 const db = getFirestore(app);
 
@@ -95,3 +97,12 @@ export const fetchLatestTweets = async () => {
         }
 })}
 
+
+export const uploadImg = (img) => {
+    if ( img === null ) return;
+    const imageRef = ref(storage, `images/${img.name + v4()}`);
+    const task = uploadBytes(imageRef, img).then( () => {
+        alert('Img Uploaded!')
+    } )
+    return task
+}
