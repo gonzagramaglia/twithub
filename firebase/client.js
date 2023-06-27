@@ -101,8 +101,7 @@ export const fetchLatestTweets = async () => {
 export const uploadImg = (img) => {
     if ( img === null ) return;
     const imageRef = ref(storage, `images/${img.name + v4()}`);
-    const task = uploadBytes(imageRef, img).then( () => {
+    uploadBytes(imageRef, img).then( () => {
         alert('Img Uploaded!')
     } )
-    return task
 }
