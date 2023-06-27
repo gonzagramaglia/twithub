@@ -11,10 +11,10 @@ const Home = () => {
     const user = useUser();
 
     useEffect( () => {
-        user && fetch('/api/timeline')
-            .then( res => res.json() )
-            .then( setTimeline  )
-        // user && fetchLatestTweets().then(setTimeline)
+        // user && fetch('/api/timeline')
+        //     .then( res => res.json() )
+        //     .then( setTimeline  )
+        user && fetchLatestTweets().then(setTimeline)
     }, [user])
 
     return (

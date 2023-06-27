@@ -1,3 +1,7 @@
+'use client'
+
+import { useState, useEffect } from "react";
+
 const DATE_UNITS = [
     ['day', 86400],
     ['hour', 3600],
@@ -19,7 +23,20 @@ const getDatesDiff = (timestamp) => {
 }
 
 export default function useTimeAgo(timestamp) {
-    const { value, unit } = getDatesDiff(timestamp)
-    const rtf = new Intl.RelativeTimeFormat('en', {style: 'long'});
+    const [timeAgo, setTimeAgo] = useState( () => getDatesDiff(timestamp) )
+
+    useEffect( () => {
+        const interval = setInterval( () => {
+            const newTimeAgo = getDatesDiff(timestamp)
+            setTimeAgo(newTimeAgo)
+        }, 1000)
+
+        return () => clearInterval(interval);
+
+    }, [timestamp])
+
+    const rtf = new Intl.RelativeTimeFormat('en', {style: 'long'}); 
+    const { value, unit } = timeAgo
+
     return rtf.format(value, unit)
 }
