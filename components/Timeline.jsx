@@ -30,6 +30,7 @@ const Timeline = () => {
                 <Tweet 
                     key={tweet.id}
                     id={tweet.id}
+                    img={tweet.img}
                     createdAt={tweet.createdAt}
                     photo={tweet.photo} 
                     name={tweet.name}

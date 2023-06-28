@@ -104,7 +104,7 @@ const CreateTweet = () => {
         }
     };
 
-    const isButtonDisabled = !content.length || status === TWITTEAR_STATUSES.LOADING
+    const isButtonDisabled = !content.length && !imgURL || status === TWITTEAR_STATUSES.LOADING
 
     let isHovered = drag === DRAG_IMAGE_STATUSES.DRAG_OVER
 
@@ -117,15 +117,37 @@ const CreateTweet = () => {
             onSubmit={handleSubmit}
             className='w-full p-4'
         >
-            <textarea 
-                onChange={handleChange}
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                placeholder='What is happening?!' 
-                value={content}
-                className={`w-[100%] resize-none text-lg p-2 rounded-md border-2  active:border-gray-300 focus:border-gray-300 border-gray-800 bg-gray-800 ${isHovered ? 'bg-gray-500 border-dashed border-2' : ''}`}
-            />
+            <section className="flex gap-3 mb-3" >
+                {
+                    user
+                    ?
+                    <Image 
+                        src={user.photo}
+                        alt={`${user.name} photo`}
+                        width={50}
+                        height={50}
+                        className="h-[50px] rounded-full"
+                    />
+                    :
+                    <Image 
+                        src='/../public/photo-placeholder.png'
+                        alt={`Photo placeholder`}
+                        width={50}
+                        height={50}
+                        className="h-[50px] rounded-full"
+                    />
+
+                }
+                <textarea 
+                    onChange={handleChange}
+                    onDragEnter={handleDragEnter}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    placeholder='What is happening?!' 
+                    value={content}
+                    className={`w-[100%] resize-none text-lg p-2 rounded-md border-2  active:border-gray-300 focus:border-gray-300 border-gray-800 bg-gray-800 ${isHovered ? 'bg-gray-500 border-dashed border-2' : ''}`}
+                />
+            </section>
             {
                 imgURL 
                 && 
