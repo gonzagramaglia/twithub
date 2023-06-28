@@ -13,7 +13,7 @@ const Tweet = ({ photo, userName, name, content, img, userId, createdAt }) => {
             <div className="flex" >
                 <p className="text-sm mr-1 font-semibold" >{name}</p>
                 <p className="text-sm text-gray-400 mr-1" >@{userName}</p>
-                <p className="text-sm text-gray-400" >{timeago}</p>
+                <time className="text-sm text-gray-400" >{timeago}</time>
             </div>
             <p className="text-sm" >{content}</p>
             { img && <Image src={img} alt={`Img Uploaded by ${userName}`} width={550} height={300} className="mt-2" />}

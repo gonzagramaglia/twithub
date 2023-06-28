@@ -41,13 +41,17 @@ const CreateTweet = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setStatus(TWITTEAR_STATUSES.LOADING)
+        setStatus(TWITTEAR_STATUSES.LOADING);
+
+        const [userName] = user.email.split('@');
+
         addTweet({
         photo: user.photo,
         content,
         img: imgURL,
         userId: user.uid,
-        userName: user.name 
+        name: user.name,
+        userName
         })
         .then( () => {
             router.push('/')

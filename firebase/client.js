@@ -66,13 +66,14 @@ export const loginWithGitHub = () => {
 };
 
 
-export const addTweet = async ({ photo, content, userId, userName, img }) => {
+export const addTweet = async ({ photo, content, userId, userName, name, img }) => {
     try {
         const docRef = await addDoc(collection(db, "tweets"), {
             photo,
             content,
             userId,
             img,
+            name,
             userName,
             createdAt: new Date(),
             likesCount: 0,
