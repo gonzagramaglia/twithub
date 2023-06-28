@@ -134,7 +134,7 @@ const CreateTweet = () => {
                         alt={`Photo placeholder`}
                         width={50}
                         height={50}
-                        className="h-[50px] rounded-full"
+                        className="h-[50px] rounded-full text-xs"
                     />
 
                 }
