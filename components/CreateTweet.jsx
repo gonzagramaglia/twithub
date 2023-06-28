@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addTweet } from "@/firebase/client";
 import Image from "next/image";
+import { v4 } from 'uuid';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const TWITTEAR_STATUSES = {
@@ -80,7 +81,7 @@ const CreateTweet = () => {
         const file = e.dataTransfer?.files[0];
         if (!file) return;
         const storage = getStorage();
-        const storageRef = ref(storage, `images/${file.name}`);
+        const storageRef = ref(storage, `images/${file.name + v4()}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
     
         if (file) {

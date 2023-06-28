@@ -16,7 +16,7 @@ const Tweet = ({ photo, userName, name, content, img, userId, createdAt }) => {
                 <time className="text-sm text-gray-400" >{timeago}</time>
             </div>
             <p className="text-sm" >{content}</p>
-            { img && <Image src={img} alt={`Img Uploaded by ${userName}`} width={550} height={300} className="mt-2" />}
+            { img && <Image src={img} alt={`Img Uploaded by ${userName}`} width={550} height={300} className="mt-2 text-sm" />}
         </div>
     </article>
   )
