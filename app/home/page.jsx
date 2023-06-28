@@ -16,7 +16,7 @@ const Home = () => {
                     <h1 className="text-lg font-bold" >Home</h1>
                 </header>
                 <Timeline />
-                <nav className="flex items-center justify-around mt-auto border-b border-gray-500 h-[58px] bg-[#0f1017] w-[100%] sticky bottom-0" >
+                <nav className="flex items-center justify-around mt-auto border-t border-gray-500 h-[58px] bg-[#0f1017] w-[100%] sticky bottom-0" >
                     <Link href='/home' >
                         <GoToHome stroke='#fff' width={32} height={32} />
                     </Link>
