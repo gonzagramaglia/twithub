@@ -2,7 +2,7 @@
 
 import Button from "@/components/Button";
 import useUser from "@/app/hooks/useUser";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addTweet, uploadImg } from "@/firebase/client";
 import Image from "next/image";
@@ -76,6 +76,12 @@ const CreateTweet = () => {
 
     const isButtonDisabled = !content.length || status === TWITTEAR_STATUSES.LOADING
 
+    let isHovered = drag === DRAG_IMAGE_STATUSES.DRAG_OVER
+
+    useEffect( () => {
+        isHovered = drag === DRAG_IMAGE_STATUSES.DRAG_OVER
+    }, [drag])
+
     return (
         <form 
             onSubmit={handleSubmit}
@@ -88,7 +94,7 @@ const CreateTweet = () => {
                 onDrop={handleDrop}
                 placeholder='What is happening?!' 
                 value={content}
-                className={`w-[100%] resize-none text-lg p-2 rounded-md border-2 focus:border-gray-300 border-gray-800 bg-gray-800 ${drag === DRAG_IMAGE_STATUSES.DRAG_OVER ? 'bg-gray-500 border-dashed border-2' : ''}`}
+                className={`w-[100%] resize-none text-lg p-2 rounded-md border-2 focus:border-gray-300 border-gray-800 bg-gray-800 ${isHovered ? 'bg-gray-500 border-dashed border-2' : ''}`}
             />
             {imgUploaded && <Image src={imgUploaded} alt={'Image Uploaded'} width={49} height={49} className="text-xs rounded-md m-2" />}
             <div>
