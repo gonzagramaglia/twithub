@@ -4,8 +4,9 @@ import Button from "@/components/Button";
 import useUser from "@/app/hooks/useUser";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { addTweet, uploadImg } from "@/firebase/client";
+import { addTweet } from "@/firebase/client";
 import Image from "next/image";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const TWITTEAR_STATUSES = {
     USER_NOT_KNOW: 0,
@@ -30,7 +31,8 @@ const CreateTweet = () => {
     const [status, setStatus] = useState(TWITTEAR_STATUSES.USER_NOT_KNOW);
 
     const [drag, setDrag] = useState(DRAG_IMAGE_STATUSES.NONE);
-    const [imgUploaded, setImgUploaded] = useState(null);
+    const [imgURL, setImgURL] = useState(null);
+
 
     const handleChange = (e) => {
         const { value } = e.target
@@ -43,6 +45,7 @@ const CreateTweet = () => {
         addTweet({
         photo: user.photo,
         content,
+        img: imgURL,
         userId: user.uid,
         userName: user.name 
         })
@@ -70,9 +73,36 @@ const CreateTweet = () => {
     const handleDrop = (e) => {
         e.preventDefault();
         setDrag(DRAG_IMAGE_STATUSES.NONE);
-        setImgUploaded(e.dataTransfer.files[0]);
-        uploadImg(imgUploaded)
-    }
+        const file = e.dataTransfer?.files[0];
+        if (!file) return;
+        const storage = getStorage();
+        const storageRef = ref(storage, `images/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+    
+        if (file) {
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              switch (snapshot.state) {
+                case "paused":
+                  console.log("Upload is paused");
+                  break;
+                case "running":
+                  console.log("Uploading...");
+                  break;
+              }
+            },
+            (error) => {
+              alert(error);
+            },
+            () => {
+              console.log("Img uploaded!");
+    
+              getDownloadURL(uploadTask.snapshot.ref).then((url) => setImgURL(url));
+            }
+          );
+        }
+    };
 
     const isButtonDisabled = !content.length || status === TWITTEAR_STATUSES.LOADING
 
@@ -94,9 +124,16 @@ const CreateTweet = () => {
                 onDrop={handleDrop}
                 placeholder='What is happening?!' 
                 value={content}
-                className={`w-[100%] resize-none text-lg p-2 rounded-md border-2 focus:border-gray-300 border-gray-800 bg-gray-800 ${isHovered ? 'bg-gray-500 border-dashed border-2' : ''}`}
+                className={`w-[100%] resize-none text-lg p-2 rounded-md border-2  active:border-gray-300 focus:border-gray-300 border-gray-800 bg-gray-800 ${isHovered ? 'bg-gray-500 border-dashed border-2' : ''}`}
             />
-            {imgUploaded && <Image src={imgUploaded} alt={'Image Uploaded'} width={49} height={49} className="text-xs rounded-md m-2" />}
+            {
+                imgURL 
+                && 
+                <div className="relative text-sm flex m-4 justify-center">
+                    <button onClick={ () => setImgURL(null) } className="absolute left-[62%] md:left-[58%] top-[-6.5px] font-bold bg-gray-800 w-[20px] h-[20px] rounded-full" >x</button>
+                    <Image src={imgURL} alt={'Image Uploaded'} width={99} height={99} className="text-xs rounded-md" />
+                </div>
+            }
             <div>
                 <Button
                     disabled={isButtonDisabled}

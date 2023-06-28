@@ -66,12 +66,13 @@ export const loginWithGitHub = () => {
 };
 
 
-export const addTweet = async ({ photo, content, userId, userName }) => {
+export const addTweet = async ({ photo, content, userId, userName, img }) => {
     try {
         const docRef = await addDoc(collection(db, "tweets"), {
             photo,
             content,
             userId,
+            img,
             userName,
             createdAt: new Date(),
             likesCount: 0,
@@ -96,12 +97,3 @@ export const fetchLatestTweets = async () => {
             createdAt: +createdAt.toDate()
         }
 })}
-
-
-export const uploadImg = (img) => {
-    if ( img === null ) return;
-    const imageRef = ref(storage, `images/${img.name + v4()}`);
-    uploadBytes(imageRef, img).then( () => {
-        alert('Img Uploaded!')
-    } )
-}
