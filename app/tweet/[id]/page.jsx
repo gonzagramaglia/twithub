@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowLeft } from "@/components/Icons";
 
 const fetchTweet = (id) => {
-    return fetch(`http://localhost:3005/api/tweets/${id}` ).then( res => { if(res.ok) return res.json() } )
+    return fetch(`http://localhost:3005/api/tweets/${id}` ).then( res => { return res.ok ? res.json() : '' } )
 }
 
 export default async function TweetPage({ params }){
@@ -18,7 +18,7 @@ export default async function TweetPage({ params }){
             <Link href='/home' className="ml-4 mt-4 self-start" >
                 <ArrowLeft stroke='#fff' />
             </Link>
-            <Tweet {...tweet} />
+            { tweet != '' ? <Tweet {...tweet} /> : <p className="text-lg mt-12 font-semibold" >Ups! Tweet not found</p> }
         </div>
     )
 }
