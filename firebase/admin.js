@@ -7,9 +7,12 @@ const { getFirestore } =  require("firebase-admin/firestore");
 
 const appName = v4();
 
-initializeApp({
-    credential: applicationDefault()
-}, appName);
-// maybe the try & catch approach is a better solution
+try {
+    initializeApp({
+        credential: applicationDefault()
+    }, appName);
+} catch (e) {
+    console.log(e)
+}
 
 export const db = getFirestore();

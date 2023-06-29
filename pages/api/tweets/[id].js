@@ -7,9 +7,18 @@ export default async (request, response) => {
   await db.collection('tweets').doc(id).get()
     .then((doc) => {
     const data = doc.data();
-    response.json(data)
-    }).catch( () => {
+    const id = doc.id;
+    const { createdAt } = data;
 
+    response.json({
+        ...data,
+        id,
+        createdAt: +createdAt.toDate()
+    })
+
+
+    }).catch( () => {
+        response.status(404).end()
       }
     )
 }
