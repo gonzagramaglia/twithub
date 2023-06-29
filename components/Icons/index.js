@@ -5,5 +5,6 @@ import Like from './Like';
 import Reuse from './Reuse';
 import Search from './Search';
 import GoToHome from './GoToHome';
+import NewImage from './Image';
 
-export { GitHub, ArrowLeft, Create, Like, Reuse, Search, GoToHome }
+export { GitHub, ArrowLeft, Create, Like, Reuse, Search, GoToHome, NewImage }

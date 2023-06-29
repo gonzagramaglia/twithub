@@ -2,11 +2,12 @@
 
 import Button from "@/components/Button";
 import useUser from "@/app/hooks/useUser";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { addTweet } from "@/firebase/client";
 import Image from "next/image";
 import { v4 } from 'uuid';
+import { NewImage } from "./Icons";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const TWITTEAR_STATUSES = {
@@ -79,6 +80,11 @@ const CreateTweet = () => {
         e.preventDefault();
         setDrag(DRAG_IMAGE_STATUSES.NONE);
         const file = e.dataTransfer?.files[0];
+        uploadFile(file)
+        
+    };
+
+    const uploadFile = (file) => {
         if (!file) return;
         const storage = getStorage();
         const storageRef = ref(storage, `images/${file.name + v4()}`);
@@ -107,6 +113,17 @@ const CreateTweet = () => {
             }
           );
         }
+    }
+
+    const fileInputRef = useRef(null);
+
+    const handleClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        uploadFile(file)
     };
 
     const isButtonDisabled = !content.length && !imgURL || status === TWITTEAR_STATUSES.LOADING
@@ -141,17 +158,25 @@ const CreateTweet = () => {
                         height={50}
                         className="h-[50px] rounded-full text-xs"
                     />
-
                 }
-                <textarea 
-                    onChange={handleChange}
-                    onDragEnter={handleDragEnter}
-                    onDragLeave={handleDragLeave}
-                    onDrop={handleDrop}
-                    placeholder='What is happening?!' 
-                    value={content}
-                    className={`w-[100%] resize-none text-lg p-2 rounded-md border-2  active:border-gray-300 focus:border-gray-300 border-gray-800 bg-gray-800 ${isHovered ? 'bg-gray-500 border-dashed border-2' : ''}`}
-                />
+                <div className='w-[100%]' >
+                    <textarea 
+                        onChange={handleChange}
+                        onDragEnter={handleDragEnter}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop}
+                        placeholder='What is happening?!' 
+                        value={content}
+                        className={`w-[100%] resize-none text-lg p-2 rounded-md border-2  active:border-gray-300 focus:border-gray-300 border-gray-800 bg-gray-800 ${isHovered ? 'bg-gray-500 border-dashed border-2' : ''}`}
+                    />
+                    <NewImage onClick={handleClick} className="cursor-pointer" />
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                    />
+                </div>
             </section>
             {
                 imgURL 
