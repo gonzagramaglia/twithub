@@ -10,5 +10,6 @@ const appName = v4();
 initializeApp({
     credential: applicationDefault()
 }, appName);
+// maybe the try & catch approach is a better solution
 
 export const db = getFirestore();
