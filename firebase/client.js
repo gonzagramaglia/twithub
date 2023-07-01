@@ -1,5 +1,5 @@
 import { initializeApp } from "@firebase/app";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, doc, onSnapshot } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, GithubAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
@@ -84,16 +84,23 @@ export const addTweet = async ({ photo, content, userId, userName, name, img }) 
       }
 }
 
+const mapTweetsFromFirebaseToTweetObject = (doc) => {
+    const data = doc.data();
+    const id = doc.id;
+    const { createdAt } = data;
+
+    return {
+        ...data,
+        id,
+        createdAt: +createdAt.toDate()
+    }
+}
+
+
+export const listenLatestTweets = onSnapshot(collection(db, "tweets"), mapTweetsFromFirebaseToTweetObject);
+
+
 export const fetchLatestTweets = async () => {
     const { docs } = await getDocs(collection(db, "tweets"));
-    return docs.map((doc) => {
-        const data = doc.data();
-        const id = doc.id;
-        const { createdAt } = data;
-
-        return {
-            ...data,
-            id,
-            createdAt: +createdAt.toDate()
-        }
-})}
+    return docs.map(mapTweetsFromFirebaseToTweetObject)
+}
